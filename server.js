@@ -15,20 +15,17 @@ const wsServer = new WebSocket({
     server: httpServer
 })
 
-// Maintain an active list of all connected users
-clients = []
-
-wsServer.on('connection', (wsClient) => {
-    console.log('New client just connected!', wsClient.origin)
-    // Push connected client to list of clients
-    clients.push(wsClient)
+wsServer.on('connection', (wsClient, req) => {
+    console.log('New client just connected!')
+    forwardMessagetoClients('New member in chat')
     // Broadcast message that client send to all clients
-    client.on('message', forwardMessagetoClients)
+    wsClient.on('message', forwardMessagetoClients)
+    wsClient.on('close', () => {forwardMessagetoClients('A client left the chat')})
 })
 
 function forwardMessagetoClients(message){
-    // Forward message to all clients inclduing sender
-    clients.forEach(client => {
+    // Forward message to all clients inclduing sender - wsServer keeps a list of active clients
+    wsServer.clients.forEach((client) => {
         client.send(message)
     });
 }

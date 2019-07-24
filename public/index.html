@@ -17,11 +17,12 @@
         <![endif]-->
         <div>
             <h4>Messages</h4>
-            <ul>
-                <li><em>User1</em>: This is a message sent to the server</li>
+            <ul id='messages'>
+                <!-- <li>This is a message sent to the server</li> -->
             </ul>
         </div>
-        <input type='text' placeholder="Type message here..." /><button id='send'>Send</button>
+        <input id="messageInput" type="text" placeholder="Type message here..." />
+        <button onclick="sendMessage(document.getElementById('messageInput').value)">Send</button>
         <script src="/client.js" async defer></script>
     </body>
 </html>
